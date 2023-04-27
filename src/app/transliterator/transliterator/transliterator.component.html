@@ -1,0 +1,11 @@
+<div class="container" [formGroup]="form">
+    <div class="transliterator-container">
+        <select class="language-select" name="language-select" id="language-select" formControlName="languages">
+            <option *ngFor="let t of transliterators" [ngValue]="t">{{ t }}</option>
+        </select>
+        <div class="textarea-container">
+            <textarea formControlName="source" name="source" id="source-textarea" cols="30" rows="10"></textarea>
+            <textarea formControlName="target" name="target" id="target-textarea" cols="30" rows="10"></textarea>
+        </div>
+    </div>
+</div>
