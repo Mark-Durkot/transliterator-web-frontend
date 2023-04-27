@@ -2,10 +2,6 @@ pipeline {
 
     agent { label 'nodejs' }
 
-    tools { 
-        nodejs "nodejs-16"
-    }
-
     stages {
 
         stage('Build') {
