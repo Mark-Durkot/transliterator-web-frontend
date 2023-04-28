@@ -4,8 +4,18 @@
             <option *ngFor="let t of transliterators" [ngValue]="t">{{ t }}</option>
         </select>
         <div class="textarea-container">
-            <textarea formControlName="source" name="source" id="source-textarea" cols="30" rows="10"></textarea>
-            <textarea formControlName="target" name="target" id="target-textarea" cols="30" rows="10"></textarea>
+            <textarea 
+                formControlName="source" 
+                name="source" id="source-textarea" 
+                cols="30" rows="10" 
+                placeholder="source...">
+            </textarea>
+            <textarea 
+                formControlName="target" 
+                name="target" id="target-textarea" 
+                cols="30" rows="10" 
+                placeholder="target...">
+            </textarea>
         </div>
     </div>
 </div>
