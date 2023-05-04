@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { WebSocketSubject, webSocket } from 'rxjs/webSocket'
 import { environment } from 'src/environments/environment';
 
@@ -23,11 +24,14 @@ export class TransliteratorComponent implements OnInit, OnDestroy {
     'ukrainian-scientific'
   ];
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
 
-    this.socket = webSocket<any>(`ws://${environment.API_URL}?transliterator=pinyin-ukrainian`);
+    this.spinner.show('socket-connection-spinner');
+    this.socket = webSocket<any>({ url: `ws://${environment.API_URL}?transliterator=pinyin-ukrainian`, openObserver: {
+      next: () => { this.spinner.hide('socket-connection-spinner') }
+    } });
 
     this.form = this.fb.group({
       source: new FormControl<string>(''),
@@ -42,7 +46,10 @@ export class TransliteratorComponent implements OnInit, OnDestroy {
 
       this.form.patchValue({ source: '', target: '' });
 
-      this.socket = webSocket<{ result: string }>(`ws://${environment.API_URL}?transliterator=${value}`);
+      this.spinner.show('socket-connection-spinner');
+      this.socket = webSocket<{ result: string }>({url: `ws://${environment.API_URL}?transliterator=${value}`, openObserver: {
+        next: () => { this.spinner.hide('socket-connection-spinner');}
+      }});
 
       this.subscribeToSocket(this.socket);
     })
@@ -60,7 +67,7 @@ export class TransliteratorComponent implements OnInit, OnDestroy {
         this.messageRevieced(msg)
       },
       error => { console.log('error: ' + error); this.form.patchValue({ target: error }) },
-      () => console.log('closing connection')
+      () => console.log('closing connection'),
     );
   }
 

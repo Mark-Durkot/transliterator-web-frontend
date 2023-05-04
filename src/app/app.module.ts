@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TransliteratorComponent } from './transliterator/transliterator/transliterator.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { TransliteratorComponent } from './transliterator/transliterator/transli
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxSpinnerModule.forRoot({type: 'ball-clip-rotate'})
   ],
   providers: [],
   bootstrap: [AppComponent]
